@@ -40,8 +40,7 @@ public class BCC {
 
         // Loop through each character in the input text
         for (int i = 0; i < text.length(); ++i) {
-            // If showSteps is true, print out the current state of the left and right
-            // alphabets
+            // If showSteps is true, print out the current state of the left and right alphabets
             if (showSteps) {
                 System.out.printf("%s  %s%n", new String(leftAlphabet), new String(rightAlphabet));
             }

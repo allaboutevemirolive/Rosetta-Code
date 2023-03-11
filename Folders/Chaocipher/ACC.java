@@ -3,6 +3,7 @@ package Chaocipher;
 public class ACC {
     public static void main(String[] args) {
         BCC obj = new BCC();
+        System.out.println();
         String plainText = "WELLDONEISBETTERTHANWELLSAID";
         System.out.printf("The original plaintext is: %s%n", plainText);
         System.out.println("\nThe left and right alphabets after each permutation during encryption are:");
