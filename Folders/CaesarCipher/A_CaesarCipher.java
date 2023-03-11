@@ -1,6 +1,6 @@
 package CaesarCipher;
 
-class A {
+class A_CaesarCipher {
     public static void main(String[] args) {
         CaesarCipher obj = new CaesarCipher();
         String str = "The quick brown fox Jumped over the lazy Dog";
