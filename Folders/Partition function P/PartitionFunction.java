@@ -61,6 +61,7 @@ public class PartitionFunction {
                 }
                 
                 // If k is odd, add P(i - j) to p[i], else subtract P(i - j) from p[i]
+                // ((k & 1) != 0) is equivalent to (k % 2 != 0)
                 if ((k & 1) != 0) {
                     p[i] = p[i].add(p[i - j]);
                 } else {
