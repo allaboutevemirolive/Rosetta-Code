@@ -11,7 +11,7 @@ public class PartitionFunction {
         // Stop the timer and calculate the elapsed time
         long end = System.currentTimeMillis();
         System.out.println("P(6666) = " + result);
-        System.out.printf("elapsed time: %d milliseconds%n", end - start);
+        System.out.printf("Elapsed time: %d milliseconds%n", end - start);
     }
 
     // Method to calculate the partition function P(n)
@@ -29,7 +29,8 @@ public class PartitionFunction {
             // Iterate over all values of k such that (k * (3 * k - 1)) / 2 <= i
             for (int k = 1;; ++k) {
                 // Calculate the jth pentagonal number
-                // Formula : https://math.stackexchange.com/questions/453562/formula-for-pentagonal-numbers
+                // Formula : https://www.youtube.com/watch?v=iJ8pnCO0nTY
+                //           https://math.stackexchange.com/questions/453562/formula-for-pentagonal-numbers
                 //           https://en.wikipedia.org/wiki/Partition_(number_theory)#Partition_function
                 //           https://upload.wikimedia.org/wikipedia/commons/0/05/Euler_partition_function.svg
                 //           https://en.wikipedia.org/wiki/Pentagonal_number#Partition_function
