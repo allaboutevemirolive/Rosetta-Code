@@ -101,7 +101,7 @@ public class Chess960 {
             throw new IllegalArgumentException("The bishops must be on opposite color squares.");
         }
 
-        /* compute SP_ID */
+        // compute SP_ID
         String piecesN = pieces.replace("Q", "").replace("B", "");
         int n1 = piecesN.indexOf('N');
         int n2 = piecesN.indexOf('N', n1 + 1);
