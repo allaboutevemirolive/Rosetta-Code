@@ -2,6 +2,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 // https://rosettacode.org/wiki/Find_Chess960_starting_position_identifier#Go
+// https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme#Scharnagl's_methods
+// - Knight positioning table
+// - Scharnagl's NQ-skeleton Table
+// - Bishop's table
 public class Chess960 {
 
     public static void main(String[] args) {
@@ -22,12 +26,14 @@ public class Chess960 {
     private static final Map<String, Integer> NTABLE = new HashMap<>();
 
     static {
+        // Piece names
         NAMES.put('R', "rook");
         NAMES.put('N', "knight");
         NAMES.put('B', "bishop");
         NAMES.put('Q', "queen");
         NAMES.put('K', "king");
 
+        // Glyph to letter map
         G2L_MAP.put('♜', "R");
         G2L_MAP.put('♞', "N");
         G2L_MAP.put('♝', "B");
@@ -39,6 +45,8 @@ public class Chess960 {
         G2L_MAP.put('♕', "Q");
         G2L_MAP.put('♔', "K");
 
+        // https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme#Scharnagl's_methods
+        // Knight positioning table
         NTABLE.put("01", 0);
         NTABLE.put("02", 1);
         NTABLE.put("03", 2);
@@ -60,13 +68,14 @@ public class Chess960 {
     }
 
     public static int spid(String pieces) {
-        // convert glyphs to letters
+        // convert glyphs(purposeful mark) to letters
         pieces = g2l(pieces); 
 
-        // check for errors
+        // check number of pieces
         if (pieces.length() != 8) {
             throw new IllegalArgumentException("There must be exactly 8 pieces.");
         }
+        // make sure there is one king and one queen
         for (char one : "KQ".toCharArray()) {
             int count = 0;
             for (int i = 0; i < pieces.length(); i++) {
@@ -78,6 +87,7 @@ public class Chess960 {
                 throw new IllegalArgumentException("There must be one " + NAMES.get(one) + ".");
             }
         }
+        // make sure there are two rooks, two knights, and two bishops
         for (char two : "RNB".toCharArray()) {
             int count = 0;
             for (int i = 0; i < pieces.length(); i++) {
@@ -89,34 +99,70 @@ public class Chess960 {
                 throw new IllegalArgumentException("There must be two " + NAMES.get(two) + ".");
             }
         }
+        // get index of two rooks and the king
         int r1 = pieces.indexOf('R');
         int r2 = pieces.indexOf('R', r1 + 1);
         int k = pieces.indexOf('K');
+        // make sure the king is between the rooks
         if (k < r1 || k > r2) {
             throw new IllegalArgumentException("The king must be between the rooks.");
         }
+        // get index of two bishops
         int b1 = pieces.indexOf('B');
         int b2 = pieces.indexOf('B', b1 + 1);
+        // make sure the bishops are on opposite color squares(odd and even)
         if ((b2 - b1) % 2 == 0) {
             throw new IllegalArgumentException("The bishops must be on opposite color squares.");
         }
 
-        // compute SP_ID
+        // https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme#Scharnagl's_methods
+        // remove the queen and bishop from the pieces string
         String piecesN = pieces.replace("Q", "").replace("B", "");
         int n1 = piecesN.indexOf('N');
         int n2 = piecesN.indexOf('N', n1 + 1);
         int N = NTABLE.get("" + n1 + n2);
 
+        // remove the bishop from the pieces string
         String piecesQ = pieces.replace("B", "");
         int Q = piecesQ.indexOf('Q');
 
+        // dark-colored bishop (even squares)
         int D = "0246".indexOf("" + b1);
+        // light-colored bishop (odd squares)
         int L = "1357".indexOf("" + b2);
+        // if the bishops are on the wrong diagonal, swap them
         if (D == -1) {
             D = "0246".indexOf("" + b2);
             L = "1357".indexOf("" + b1);
         }
-
+ 
+        /*
+         * idn = 96N + 16Q + 4D + L
+         * 
+         * Second method :
+         * Given idn = 518 we locate 512, with NQ-skeleton -NQ-N-, in the table, 
+         * and get bishops code = 518 - 512 = 6.
+         */
         return 96 * N + 16 * Q + 4 * D + L;
+        /*
+         * https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme#Scharnagl's_methods
+         * - Scharnagl's NQ-skeleton Table
+         * - Bishop's table
+         * 
+         * B = r1 gives the bishop's code
+         * Q = r2 gives the queen's position
+         * N = q2 gives the N5N code
+         * 
+         * Formula:
+         * 
+         * idn = q1*16 + r1
+         *  q1 = q2*6  + r2
+         * idn = (q2*6 + r2)16 + r1
+         * idn =   96N + 16Q + B
+         *   B = (4 * D) + L
+         * 
+         * idn = 96N + 16Q + 4D + L
+         * 
+         */
     }
 }
