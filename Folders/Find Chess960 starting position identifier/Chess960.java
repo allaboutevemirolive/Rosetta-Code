@@ -160,10 +160,10 @@ public class Chess960 {
          * Formula:
          * 
          * idn = q1*16 + r1
-         *  q1 = q2*6  + r2
+         *       q1 = q2*6  + r2
          * idn = (q2*6 + r2)16 + r1
          * idn =   96N + 16Q + B
-         *   B = (4 * D) + L
+         *                     B = (4 * D) + L
          * 
          * idn = 96N + 16Q + 4D + L
          * 
