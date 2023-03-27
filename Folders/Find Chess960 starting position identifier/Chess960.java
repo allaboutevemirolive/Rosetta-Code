@@ -12,6 +12,7 @@ public class Chess960 {
         String[] positions = { "♕♘♖♗♗♘♔♖", "♖♘♗♕♔♗♘♖", "♖♕♘♗♗♔♖♘", "♖♘♕♗♗♔♖♘" };
 
         for (String pos : positions) {
+            // spid = starting position identifier
             int spid = spid(pos);
             String letters = g2l(pos);
             // System.out.printf("%s : %d%n", pos, spid);
@@ -68,7 +69,7 @@ public class Chess960 {
     }
 
     public static int spid(String pieces) {
-        // convert glyphs(purposeful mark) to letters
+        // convert glyphs(purposeful mark eg. ♞) to letters
         pieces = g2l(pieces); 
 
         // check number of pieces
@@ -110,22 +111,25 @@ public class Chess960 {
         // get index of two bishops
         int b1 = pieces.indexOf('B');
         int b2 = pieces.indexOf('B', b1 + 1);
-        // make sure the bishops are on opposite color squares(odd and even)
+        // make sure the index for bishops are on opposite color squares(odd and even)
         if ((b2 - b1) % 2 == 0) {
             throw new IllegalArgumentException("The bishops must be on opposite color squares.");
         }
 
         // https://en.wikipedia.org/wiki/Fischer_random_chess_numbering_scheme#Scharnagl's_methods
-        // remove the queen and bishop from the pieces string
+        // Remove the queen and bishop from the pieces string
+        // Refer Knight positioning table
         String piecesN = pieces.replace("Q", "").replace("B", "");
         int n1 = piecesN.indexOf('N');
         int n2 = piecesN.indexOf('N', n1 + 1);
         int N = NTABLE.get("" + n1 + n2);
 
         // remove the bishop from the pieces string
+        // Refer Scharnagl's NQ-skeleton Table
         String piecesQ = pieces.replace("B", "");
         int Q = piecesQ.indexOf('Q');
 
+        // Refer Bishop's table
         // dark-colored bishop (even squares)
         int D = "0246".indexOf("" + b1);
         // light-colored bishop (odd squares)
