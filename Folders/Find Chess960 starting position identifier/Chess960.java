@@ -144,8 +144,11 @@ public class Chess960 {
          * idn = 96N + 16Q + 4D + L
          * 
          * Second method :
-         * Given idn = 518 we locate 512, with NQ-skeleton -NQ-N-, in the table, 
+         * Given idn = 518 (Standard chess variant/ not Fischer random chess)
+         * we locate 512, 
+         * with NQ-skeleton -NQ-N-, in the table, 
          * and get bishops code = 518 - 512 = 6.
+         * bishops code = 6
          */
         return 96 * N + 16 * Q + 4 * D + L;
         /*
