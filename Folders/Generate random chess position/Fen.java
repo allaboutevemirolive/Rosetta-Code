@@ -2,7 +2,8 @@
 import static java.lang.Math.abs;
 import java.util.Random;
 
-// Define a public class named Fen
+// https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+// https://chess.stackexchange.com/questions/19331/how-does-x-fen-chess960-fen-differentiate-from-traditional-fen-notation
 public class Fen {
     // Create an instance of the Random class
     static Random rand = new Random();
@@ -109,6 +110,7 @@ public class Fen {
                     // If there are any consecutive empty squares, append their count to the FEN notation
                     if (countEmpty > 0) {
                         fen.append(countEmpty);
+                        // Reset the countEmpty counter
                         countEmpty = 0;
                     }
                     // Append the piece to the FEN notation
@@ -118,6 +120,7 @@ public class Fen {
             // If there are any consecutive empty squares at the end of a row, append their count to the FEN notation
             if (countEmpty > 0) {
                 fen.append(countEmpty);
+                // Reset the countEmpty counter
                 countEmpty = 0;
             }
             // Append a slash to indicate the end of the row
